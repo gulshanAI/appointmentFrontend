@@ -1,10 +1,8 @@
 import { useState } from "react";
 import CalendarBox from "./components/CalendarBox";
 import useAppointment from "./hooks/useAppointment";
-import { lazy, Suspense } from "react";
-
-const ViewDetail = lazy(() => import("./components/ViewDetail"));
-const ActionForm = lazy(() => import("./components/ActionForm"));
+import ActionForm from "./components/ActionForm";
+import ViewDetail from "./components/ViewDetail";
 
 function App() {
   const [viewDetail, setViewDetail] = useState(false);
@@ -51,18 +49,12 @@ function App() {
         handleDeleteEvent={handleDeleteEvent}
       />
       {showAction && (
-        <Suspense>
-          <ActionForm
-            addAppointment={addAppointment}
-            closePopAction={closePopAction}
-          />
-        </Suspense>
+        <ActionForm
+          addAppointment={addAppointment}
+          closePopAction={closePopAction}
+        />
       )}
-      {viewDetail && (
-        <Suspense>
-          <ViewDetail data={data} closeSummary={closeSummary} />
-        </Suspense>
-      )}
+      {viewDetail && <ViewDetail data={data} closeSummary={closeSummary} />}
     </div>
   );
 }
