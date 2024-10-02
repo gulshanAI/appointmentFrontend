@@ -4,7 +4,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { appointmentSchema } from "../lib/validationSchema";
 import { useState } from "react";
 
-const ActionForm = ({ addAppointment }) => {
+const ActionForm = ({ addAppointment, closePopAction }) => {
   const [formError, setFormError] = useState(null);
   const {
     register,
@@ -13,10 +13,10 @@ const ActionForm = ({ addAppointment }) => {
   } = useForm({
     resolver: yupResolver(appointmentSchema),
     defaultValues: {
-      name: "Gulsna  Prajapt",
-      email: "fulshan@gmail.com",
-      phone: "9898989876",
-      title: "THis is test",
+      name: "",
+      email: "",
+      phone: "",
+      title: "",
     },
   });
   const sendAppt = async (data) => {
@@ -26,7 +26,10 @@ const ActionForm = ({ addAppointment }) => {
   };
   return (
     <div>
-      <div className="fixed inset-0 bg-black opacity-50 z-40" />
+      <div
+        className="fixed inset-0 bg-black opacity-50 z-40"
+        onClick={closePopAction}
+      />
       <div
         id="modalContent"
         className="fixed top-1/2 left-1/2 max-w-md w-full bg-white p-4 rounded shadow-lg z-50 -translate-x-1/2 -translate-y-1/2"
@@ -76,7 +79,7 @@ const ActionForm = ({ addAppointment }) => {
           <div className="flex justify-end">
             <button
               type="button"
-              id="closeModal"
+              onClick={closePopAction}
               className="bg-red-500 text-white px-4 py-2 rounded mr-2"
             >
               Close

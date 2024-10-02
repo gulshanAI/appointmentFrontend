@@ -1,5 +1,6 @@
 import { XMarkIcon } from "@heroicons/react/24/solid";
 import { getReadableDateAndTime } from "../lib/helper";
+import { memo } from "react";
 
 const List = ({ item }) => {
   const { extendedProps, title, start, end } = item;
@@ -20,7 +21,11 @@ const List = ({ item }) => {
 };
 
 const ViewDetail = ({ data, closeSummary }) => {
-  if (!data) return null;
+  const newData =
+    data &&
+    data.length &&
+    data.sort((a, b) => new Date(a.start) - new Date(b.start));
+  if (!newData) return null;
   return (
     <div>
       <div
@@ -37,7 +42,7 @@ const ViewDetail = ({ data, closeSummary }) => {
           <p>Total Appointment: {data.length}</p>
         </div>
         <div className="overflow-auto h-full pb-24 pt-8 flex flex-col gap-y-3">
-          {data.map((item) => (
+          {newData.map((item) => (
             <List key={item.id} item={item} />
           ))}
         </div>
@@ -46,4 +51,4 @@ const ViewDetail = ({ data, closeSummary }) => {
   );
 };
 
-export default ViewDetail;
+export default memo(ViewDetail);

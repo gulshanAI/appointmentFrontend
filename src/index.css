@@ -5,3 +5,16 @@
 body {
   @apply font-sans text-gray-700;
 }
+
+.fc-scrollgrid-sync-inner {
+  @apply text-sm text-gray-700;
+}
+.fc-event {
+  @apply bg-indigo-500 text-white rounded-md p-2;
+}
+.fc-button-group {
+  @apply gap-x-4;
+}
+.fc-button-primary {
+  @apply bg-indigo-500 text-white rounded-md  border-0 !important;
+}

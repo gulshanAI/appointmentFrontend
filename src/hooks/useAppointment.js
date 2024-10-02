@@ -1,17 +1,21 @@
 "use client";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { axiosFireApi } from "../lib/api";
 
 const useAppointment = () => {
+  console.log("render");
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [showAction, setShowAction] = useState(null);
 
-  const popActionForm = (selectInfo) => {
+  const popActionForm = useCallback((selectInfo) => {
     let calendarApi = selectInfo.view.calendar;
     calendarApi.unselect();
     setShowAction(selectInfo);
+  }, []);
+  const closePopAction = () => {
+    setShowAction(null);
   };
 
   const addAppointment = async (formData) => {
@@ -37,10 +41,10 @@ const useAppointment = () => {
     await axiosFireApi(["appointment", id], "delete");
   };
 
-  const convertToFormat = (date) => {
+  const convertToFormat = useCallback((date) => {
     const finalData = date.data.map((item) => convertToCalFormat(item));
     return finalData;
-  };
+  }, []);
   const convertToCalFormat = (item) => {
     return {
       id: item._id,
@@ -109,6 +113,7 @@ const useAppointment = () => {
     popActionForm,
     handleUpdateEvents,
     handleDeleteEvent,
+    closePopAction,
   };
 };
 
