@@ -3,7 +3,6 @@ import { useState, useEffect, useCallback } from "react";
 import { axiosFireApi } from "../lib/api";
 
 const useAppointment = () => {
-  console.log("render");
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -82,9 +81,7 @@ const useAppointment = () => {
       start: start,
       end: end,
     };
-    const response = await axiosFireApi(["appointment", id], "patch", sendData);
-    console.log(response);
-    // console.log("start", start, end, events.event.id);
+    axiosFireApi(["appointment", id], "patch", sendData);
   };
 
   const handleDeleteEvent = (eventInfo) => {
