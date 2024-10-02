@@ -11,7 +11,6 @@ function App() {
     loading,
     error,
     addAppointment,
-    deleteAppotintMent,
     popActionForm,
     showAction,
     handleUpdateEvents,
@@ -43,7 +42,6 @@ function App() {
       </div>
       <CalendarBox
         data={data}
-        deleteAppotintMent={deleteAppotintMent}
         handleDateSelect={popActionForm}
         handleUpdateEvents={handleUpdateEvents}
         handleDeleteEvent={handleDeleteEvent}

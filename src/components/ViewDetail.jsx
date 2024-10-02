@@ -51,4 +51,4 @@ const ViewDetail = ({ data, closeSummary }) => {
   );
 };
 
-export default memo(ViewDetail);
+export default ViewDetail;

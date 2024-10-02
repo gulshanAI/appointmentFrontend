@@ -13,10 +13,10 @@ const ActionForm = ({ addAppointment, closePopAction }) => {
   } = useForm({
     resolver: yupResolver(appointmentSchema),
     defaultValues: {
-      name: "",
-      email: "",
-      phone: "",
-      title: "",
+      name: "Gulsna Prajapt",
+      email: "fulshan@gmail.com",
+      phone: "9898989876",
+      title: "THis is test",
     },
   });
   const sendAppt = async (data) => {

@@ -8,11 +8,11 @@ const useAppointment = () => {
   const [error, setError] = useState(null);
   const [showAction, setShowAction] = useState(null);
 
-  const popActionForm = useCallback((selectInfo) => {
+  const popActionForm = (selectInfo) => {
     let calendarApi = selectInfo.view.calendar;
     calendarApi.unselect();
     setShowAction(selectInfo);
-  }, []);
+  };
   const closePopAction = () => {
     setShowAction(null);
   };
@@ -27,8 +27,8 @@ const useAppointment = () => {
     const response = await axiosFireApi("appointment", "post", sendData);
     if (response.success) {
       const calData = convertToCalFormat(response.data.data);
+      calendarApi.addEvent(calData);
       setData([...data, calData]);
-      calendarApi.addEvent(convertToCalFormat(calData));
       setShowAction(null);
       return false;
     } else {
@@ -36,14 +36,10 @@ const useAppointment = () => {
     }
   };
 
-  const deleteAppotintMent = async (id) => {
-    await axiosFireApi(["appointment", id], "delete");
-  };
-
-  const convertToFormat = useCallback((date) => {
+  const convertToFormat = (date) => {
     const finalData = date.data.map((item) => convertToCalFormat(item));
     return finalData;
-  }, []);
+  };
   const convertToCalFormat = (item) => {
     return {
       id: item._id,
@@ -81,6 +77,13 @@ const useAppointment = () => {
       start: start,
       end: end,
     };
+    const newData = data.map((item) => {
+      if (item.id === id) {
+        return { ...item, start, end };
+      }
+      return item;
+    });
+    setData(newData);
     axiosFireApi(["appointment", id], "patch", sendData);
   };
 
@@ -92,6 +95,8 @@ const useAppointment = () => {
       )
     ) {
       eventInfo.event.remove();
+      const newData = data.filter((item) => item.id !== id);
+      setData(newData);
       axiosFireApi(["appointment", id], "delete");
     }
   };
@@ -105,7 +110,6 @@ const useAppointment = () => {
     loading,
     error,
     addAppointment,
-    deleteAppotintMent,
     showAction,
     popActionForm,
     handleUpdateEvents,
